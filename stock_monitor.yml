@@ -1,0 +1,34 @@
+name: Stock Dip Monitor
+
+on:
+  schedule:
+    # Every hour Mon-Fri during US market + after-hours (12:00-22:00 UTC)
+    - cron: "0 12-22 * * 1-5"
+  workflow_dispatch:          # manual trigger button in GitHub
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      EMAIL_SENDER:   ${{ secrets.EMAIL_SENDER }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+      SMTP_SERVER:    ${{ secrets.SMTP_SERVER }}
+      SMTP_PORT:      ${{ secrets.SMTP_PORT }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run stock monitor
+        run: python main.py
