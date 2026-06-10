@@ -30,8 +30,7 @@ EMAIL_SENDER   = os.environ.get("EMAIL_SENDER", "")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", "")      # Gmail App Password
 EMAIL_RECEIVER = os.environ.get("EMAIL_RECEIVER", "")
 SMTP_SERVER    = os.environ.get("SMTP_SERVER", "smtp.gmail.com")
-SMTP_PORT      = int(os.environ.get("SMTP_PORT", "587"))
-
+SMTP_PORT      = int(os.environ.get("SMTP_PORT") or "587")
 
 # ──────────────────────────────────────────────
 # 3.  DATA HELPERS
