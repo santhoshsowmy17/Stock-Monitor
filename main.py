@@ -203,7 +203,7 @@ def build_email_html(rows: list[dict], alert_map: dict[str, list[str]]) -> str:
     table_rows = ""
     for r in rows:
         tk = r["ticker"]
-        alert_flag = "🔔" if tk in alert_map else ""
+        alert_flag = ""  # no icon
         dip = r["Dip Score"]
         dip_color = (
             "#e74c3c" if dip >= 60 else
@@ -211,15 +211,13 @@ def build_email_html(rows: list[dict], alert_map: dict[str, list[str]]) -> str:
             "#27ae60"
         )
         table_rows += f"""<tr>
-            <td style="font-weight:600">{alert_flag} {tk}</td>
+            <td style="font-weight:600">{tk}</td>
             <td style="text-align:right">${r['price']:.2f}</td>
             {_fmt(r['6M %'])}
             {_fmt(r['3M %'])}
             {_fmt(r['1M %'])}
             {_fmt(r['1D %'])}
             <td style="text-align:center;font-weight:700;color:{dip_color}">{dip}</td>
-            {_fmt(r['1M %'])}
-            {_fmt(r['Dist 52W Low %'])}
             {_fmt(r['Dist Below MA50 %'])}
             {_fmt(r['Dist Below MA200 %'])}
         </tr>"""
@@ -252,8 +250,6 @@ def build_email_html(rows: list[dict], alert_map: dict[str, list[str]]) -> str:
           <th style="padding:8px;text-align:right">1M %</th>
           <th style="padding:8px;text-align:right">1D %</th>
           <th style="padding:8px;text-align:center">Dip Score</th>
-          <th style="padding:8px;text-align:right">Mo. Decline</th>
-          <th style="padding:8px;text-align:right">Dist 52W Low</th>
           <th style="padding:8px;text-align:right">Dist &lt; MA50</th>
           <th style="padding:8px;text-align:right">Dist &lt; MA200</th>
         </tr>
