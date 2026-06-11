@@ -216,7 +216,6 @@ def build_email_html(rows: list[dict], alert_map: dict[str, list[str]]) -> str:
             {_fmt(r['6M %'])}
             {_fmt(r['3M %'])}
             {_fmt(r['1M %'])}
-            {_fmt(r['1D %'])}
             <td style="text-align:center;font-weight:700;color:{dip_color}">{dip}</td>
             {_fmt(r['Dist Below MA50 %'])}
             {_fmt(r['Dist Below MA200 %'])}
@@ -248,7 +247,6 @@ def build_email_html(rows: list[dict], alert_map: dict[str, list[str]]) -> str:
           <th style="padding:8px;text-align:right">6M %</th>
           <th style="padding:8px;text-align:right">3M %</th>
           <th style="padding:8px;text-align:right">1M %</th>
-          <th style="padding:8px;text-align:right">1D %</th>
           <th style="padding:8px;text-align:center">Dip Score</th>
           <th style="padding:8px;text-align:right">Dist &lt; MA50</th>
           <th style="padding:8px;text-align:right">Dist &lt; MA200</th>
