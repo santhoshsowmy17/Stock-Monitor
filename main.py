@@ -277,9 +277,8 @@ def build_email_html(rows: list[dict], alert_map: dict[str, list[str]]) -> str:
     """
     return html
 
-
 def send_email(subject: str, html_body: str):
-    """Send an HTML email via SMTP (Gmail by default)."""
+    """Send an HTML email via SMTP SSL (Gmail by default)."""
     if not all([EMAIL_SENDER, EMAIL_PASSWORD, EMAIL_RECEIVER]):
         print("  ⚠  Email credentials not configured – skipping send.")
         print("     Set EMAIL_SENDER, EMAIL_PASSWORD, EMAIL_RECEIVER env vars.")
@@ -291,14 +290,13 @@ def send_email(subject: str, html_body: str):
     msg["To"]      = EMAIL_RECEIVER
     msg.attach(MIMEText(html_body, "html"))
 
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login(EMAIL_SENDER, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER.split(","), msg.as_string())
-
-    print("  ✓  Email sent successfully.")
+    try:
+        with smtplib.SMTP_SSL(SMTP_SERVER, 465) as server:
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER.split(","), msg.as_string())
+        print("  ✓  Email sent successfully.")
+    except Exception as e:
+        print(f"  ✗  Email failed: {e}")
 
 
 # ──────────────────────────────────────────────
