@@ -8,7 +8,7 @@ Automated stock monitoring that runs every hour via GitHub Actions, tracks 15 ti
 
 | Feature | Details |
 |---------|---------|
-| **Tickers** | AAPL, MSFT, GOOGL, AMZN, NVDA, META, TSLA, JPM, V, JNJ, WMT, PG, UNH, HD, MA |
+| **Tickers** | XXXX,YYY |
 | **Schedule** | Every hour Mon–Fri, 12:00–22:00 UTC (covers US market hours) |
 | **Data** | yfinance (free, no API key needed) |
 | **Alerts** | Email with full HTML table |
@@ -35,91 +35,6 @@ An alert fires for a ticker when **any** of these are true (and the stock is *no
 
 ---
 
-## Setup (5 minutes)
-
-### 1. Create the repo
-
-```bash
-git init stock-monitor && cd stock-monitor
-# copy the project files in, then:
-git add -A && git commit -m "initial commit"
-git remote add origin git@github.com:YOUR_USER/stock-monitor.git
-git push -u origin main
-```
-
-### 2. Add GitHub Secrets
-
-Go to **Settings → Secrets and variables → Actions → New repository secret** and add:
-
-| Secret | Value |
-|--------|-------|
-| `EMAIL_SENDER` | your-email@gmail.com |
-| `EMAIL_PASSWORD` | Gmail **App Password** (not your login password) |
-| `EMAIL_RECEIVER` | recipient@example.com (comma-separated for multiple) |
-| `SMTP_SERVER` | `smtp.gmail.com` *(optional, this is the default)* |
-| `SMTP_PORT` | `587` *(optional, this is the default)* |
-
-#### Getting a Gmail App Password
-
-1. Go to [myaccount.google.com/security](https://myaccount.google.com/security)
-2. Enable **2-Step Verification** if not already on
-3. Search "App passwords" → generate one for "Mail"
-4. Copy the 16-character password into the `EMAIL_PASSWORD` secret
-
-### 3. Run it
-
-- **Automatic:** It will run on the cron schedule once pushed.
-- **Manual:** Go to **Actions → Stock Dip Monitor → Run workflow**.
-
----
-
-## Customization
-
-### Change tickers
-
-Edit the `TICKERS` list at the top of `main.py`:
-
-```python
-TICKERS = [
-    "AAPL", "MSFT", "GOOGL",  # ... your picks
-]
-```
-
-### Only email when alerts fire
-
-Uncomment this line in `main()`:
-
-```python
-# if not alert_map: return
-```
-
-### Change the schedule
-
-Edit the cron in `.github/workflows/stock_monitor.yml`:
-
-```yaml
-- cron: "0 12-22 * * 1-5"   # current: hourly Mon-Fri 12-22 UTC
-- cron: "0 */2 * * *"        # example: every 2 hours, all days
-```
-
----
-
-## Local Testing
-
-```bash
-pip install -r requirements.txt
-
-# without email (just prints to console):
-python main.py
-
-# with email:
-export EMAIL_SENDER="you@gmail.com"
-export EMAIL_PASSWORD="xxxx xxxx xxxx xxxx"
-export EMAIL_RECEIVER="you@gmail.com"
-python main.py
-```
-
----
 
 ## Buy-the-Dip Score Breakdown
 
