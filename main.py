@@ -6,9 +6,6 @@ and emails an HTML report when alert conditions are met.
 
 import os
 import datetime as dt
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 import yfinance as yf
 import pandas as pd
@@ -338,8 +335,11 @@ def main():
     # Always send the summary email so you see the table.
     # To only email on alerts, uncomment the next line:
     # if not alert_map: return
-    send_email(subject, html)
-
+    with open("email_subject.txt", "w") as f:
+        f.write(subject)
+    with open("email_body.html", "w") as f:
+        f.write(html)
+    print("  ✓  Email files written.")
     # Print summary table to Actions log
     print(f"\n{'─'*60}")
     df = pd.DataFrame(rows)[["ticker", "price", "6M %", "3M %", "1M %", "1D %", "Dip Score"]]
