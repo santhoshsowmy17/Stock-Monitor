@@ -319,11 +319,7 @@ def main():
 
     # Build & send email
     n_alerts = len(alert_map)
-    subject = (
-        f"🔔 {n_alerts} Stock Alert{'s' if n_alerts != 1 else ''} – Dip Monitor"
-        if n_alerts
-        else "📊 Stock Dip Monitor – No Alerts"
-    )
+    subject = "Dip Monitor"
     html = build_email_html(rows, alert_map)
 
     # Always send the summary email so you see the table.
