@@ -2,21 +2,13 @@ name: Stock Dip Monitor
 
 on:
   schedule:
-    # Every hour Mon-Fri during US market + after-hours (12:00-22:00 UTC)
     - cron: "0 12-22 * * 1-5"
-  workflow_dispatch:          # manual trigger button in GitHub
+  workflow_dispatch:
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
-    env:
-      EMAIL_SENDER:   ${{ secrets.EMAIL_SENDER }}
-      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-      EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-      SMTP_SERVER:    ${{ secrets.SMTP_SERVER }}
-      SMTP_PORT:      ${{ secrets.SMTP_PORT }}
 
     steps:
       - name: Checkout repo
@@ -32,3 +24,20 @@ jobs:
 
       - name: Run stock monitor
         run: python main.py
+
+      - name: Read subject line
+        id: subject
+        run: echo "line=$(cat email_subject.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_SENDER }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: ${{ steps.subject.outputs.line }}
+          to: ${{ secrets.EMAIL_RECEIVER }}
+          from: ${{ secrets.EMAIL_SENDER }}
+          html_body: file://email_body.html
