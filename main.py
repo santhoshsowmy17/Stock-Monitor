@@ -15,9 +15,10 @@ import numpy as np
 # 1.  TICKERS
 # ──────────────────────────────────────────────
 TICKERS = [
-    "AAPL", "MSFT", "GOOGL", "AMZN", "NVDA",
-    "META", "TSLA", "JPM", "V", "JNJ",
-    "WMT", "PG", "UNH", "HD", "MA",
+    "AAPL", "MSFT", "GOOGL", "AMZN",  "META",
+    "VOO","IDNA","BOTZ","VPU", "SMH",
+    "NVDA", "AMD", "SNDK", "MU", "TSM", "AVGO", "DELL", "HPQ",
+    "IBIT", "ETHA", "TSLA"
 ]
 
 # ──────────────────────────────────────────────
