@@ -18,7 +18,8 @@ TICKERS = [
     "AAPL", "MSFT", "GOOGL", "AMZN",  "META",
     "VOO","IDNA","BOTZ","VPU", "SMH",
     "NVDA", "AMD", "SNDK", "MU", "TSM", "AVGO", "DELL", "HPQ",
-    "IBIT", "ETHA", "TSLA"
+    "IBIT", "ETHA", "TSLA", 
+    "^NSEI", "NIFTYMIDCAP150.NS", "NIFTYSMLCAP250.NS"
 ]
 
 # ──────────────────────────────────────────────
